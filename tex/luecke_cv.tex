@@ -1,0 +1,260 @@
+%% Copyright 2006-2015 Xavier Danaux (xdanaux@gmail.com).
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License version 1.3c,
+% available at http://www.latex-project.org/lppl/.
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+\usepackage[utf8]{inputenc}
+
+% moderncv themes
+\moderncvstyle{classic}                             % style options are 'casual' (default), 'classic', 'banking', 'oldstyle' and 'fancy'
+\moderncvcolor{blue}                               % color options 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple' and 'red'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+\moderncvtheme[blue]{classic}
+\usepackage[utf8]{inputenc}
+% adjust the page margins
+\usepackage[scale=0.8]{geometry}
+\AtBeginDocument{\recomputelengths}
+
+% personal data
+\firstname{Martin}
+\familyname{Lücke}
+\address{Informatics Forum}{University of Edinburgh}{Edinburgh EH8 9AB United Kingdom}
+%\phone[fixed]{+49~(0)~177~344-3007}
+\email{martin.luecke@ed.ac.uk}
+
+\usepackage[style=numeric-verb,
+            sorting=none, % keep order as in the bib file ...
+            giveninits=true,
+            defernumbers,
+            backend=biber,
+maxbibnames=50]{biblatex}
+
+\defbibenvironment{bibliography}
+  {\list%
+     {\printfield{year}\hspace{1em}\printtext[labelnumberwidth]{\printfield{labelprefix}\printfield{labelnumber}}}
+     {\setlength{\topsep}{0pt}% layout parameters from moderncvstyleclassic.sty
+      \setlength{\labelwidth}{\hintscolumnwidth}%
+      \setlength{\labelsep}{\separatorcolumnwidth}%
+      \leftmargin\labelwidth%
+      \advance\leftmargin\labelsep%
+      }%
+      \sloppy\clubpenalty4000\widowpenalty4000}
+  {\endlist}
+  {\item}
+
+
+\DeclareNameAlias{default}{first-last}
+
+\usepackage{xstring}
+\usepackage{xpatch}
+\newbibmacro*{name:bold}[2]{%
+  \def\do##1{\iffieldequalstr{hash}{##1}{\bfseries\listbreak}{}}%
+  \dolistloop{\boldnames}%
+}
+
+\newcommand*{\boldnames}{}
+
+\xpretobibmacro{name:family}{\begingroup\usebibmacro{name:bold}{#1}{#2}}{}{}
+\xpretobibmacro{name:given-family}{\begingroup\usebibmacro{name:bold}{#1}{#2}}{}{}
+\xpretobibmacro{name:family-given}{\begingroup\usebibmacro{name:bold}{#1}{#2}}{}{}
+\xpretobibmacro{name:delim}{\begingroup\normalfont}{}{}
+
+\xapptobibmacro{name:family}{\endgroup}{}{}
+\xapptobibmacro{name:given-family}{\endgroup}{}{}
+\xapptobibmacro{name:family-given}{\endgroup}{}{}
+\xapptobibmacro{name:delim}{\endgroup}{}{}
+
+% Got hashes from the bbl file
+\renewcommand*{\boldnames}{}
+\forcsvlist{\listadd\boldnames}
+  {{f3b57123791f63857d478ac84c802258},
+   {7dd9b93410e4a44439b25ea5e2c49d4a}}
+
+% Only print a year once
+\newcounter{currentYear}
+\DeclareFieldFormat{year}{%
+\ifthenelse{\equal{#1}{\arabic{currentYear}}}%
+    {}
+%{\setcounter{currentYear}{#1}{\bfseries #1}}}
+{\setcounter{currentYear}{#1}{#1}}}
+
+%\bibliography{publications}
+
+\usepackage{xspace}
+\newcommand{\lift}{\textsc{Lift}\xspace}
+\newcommand{\Lift}{\textsc{Lift}\xspace}
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+\nocite{*}
+%-----       resume       ---------------------------------------------------------
+%\vspace{-2cm}
+\makecvtitle
+
+
+%----------------------------------------------------------------------------------
+%            personal details
+%----------------------------------------------------------------------------------
+%\section{Personal Details}
+%
+%\cvitem{Birthday}{8 December 1994}
+%\cvitem{Birthplace}{Recklinghausen, Germany}
+%\cvitem{Nationality}{German}
+%\vspace{-0.9cm}
+
+%----------------------------------------------------------------------------------
+%            education
+%----------------------------------------------------------------------------------
+\section{University Education}
+	\cventry{since 2019}
+					{PhD Studies}
+                    {University of Edinburgh}{Edinburgh, Scotland, United Kingdom}{}
+                    {\textbf{Supervisors:} Aaron Smith, Michel Steuwer \\
+                    \textbf{Research interests:} Compiler intermediate representations, MLIR, Functional programming \\
+                    %My PhD research focuses on compiler intermediate representations (IR) and high performance code optimization strategies using transformations between different IRs. For this purpose I design a new intermediate representation for \Lift using the recently open sourced MLIR compiler infrastructure. \Lift is a functional IR for hardware agnostic parallel programming in combination with a powerful rewriting system. MLIR provides a flexible infrastructure which enables specification of IRs and contains a toolkit for performing transformations on them. This approach enables exploring iteractions between different IRs and the \Lift IR e.g.  by investigating the use of the \Lift rewriting system to optimize Tensorflow graphs.
+                    %}
+                    My PhD research focuses on compiler intermediate representations (IR) and the expression of optimizations in them. Particularly I am interested in exploring the potential of different types of representations to express specific optimizations. For this purpose I design a new intermediate representation inspired by \Lift using the recently open sourced MLIR compiler infrastructure. \Lift is a functional IR for expressing hardware agnostic parallel programs in combination with a rewriting system. MLIR provides a flexible infrastructure that enables specification of IRs and contains a toolkit for performing transformations on them. This infrastructure enables transformation between IRs expressed with MLIR and hence yields opportunities to utilize optimizations specific to one IR for other IRs. An example I would like to explore is the optimization of Tensorflow graphs using the Lift rewriting system by integrating the graph Tensorflow IR with the functional Lift IR.%An example for this is the optimization of Tensorflow graphs using the \Lift rewriting system.
+                    }
+
+
+	\cventry{2017 -- 2019}
+					{Master of Science in computer science}
+					{University of Münster}{Münster, Germany}
+                    {\textit{Final grade in computer science: excellent (1.4)}}
+					{Thesis title: Efficient Implementation and Optimization of Geometric Multigrid Operations in the Lift Framework \\
+					 \textit{Grade for thesis: excellent (1.0)}
+					}
+
+	\cventry{2013 -- 2017}
+                        {Bachelor of Science in computer science}
+					{University of Münster}{Münster, Germany}
+					{\textit{Final grade in computer science: good (2.3)}}
+					{Thesis title: Legal Supply of Sport Courses using an iOS App \\
+					 %In this thesis, I extended the Floodlight network controller with a module which enables
+					 %a novel approach to multicast communication in software-defined networks.
+					 \textit{Grade for thesis: good (1.7)}
+					}
+					
+   % \cventry{2005 -- 2013}
+                    %{Abitur (A Levels)}
+					%{Priv. Gymnasium Canisianum}{Lüdinghausen, Germany}
+					%{Thesis title: Legal Music Supply of Sport Courses using an iOS App}
+					%{\textit{Final grade: good (1.7)}}
+					
+
+%----------------------------------------------------------------------------------
+%            academic events
+%----------------------------------------------------------------------------------
+\section{Attended Events}
+
+\cvitem{2018}{PRACE Course - \textit{Iterative Linear Solvers and Parallelization}, HLRS High-Performance Computing Center, Stuttgart, Germany}
+\cvitem{2017}{Apple WWDC 2017 - \textit{Student Scholarship Winner}, San Jose, USA}
+
+
+%----------------------------------------------------------------------------------
+%            projects
+%----------------------------------------------------------------------------------
+\section{Projects}
+   \cventry{2018}
+					{Master Thesis}
+					{Efficient Implementation and Optimization of Geometric Multigrid Operations in the Lift Framework}{}
+					{}
+					{During this thesis I extended the functional specification language of \Lift with a new primitive for expressing multigrid operations. Multigrid methods are often used for effectively approximating partial differential equations. In addition to that I investigated different approaches to optimizing multigrid operations and particularly iterative operations.}
+    
+    \cventry{2017}
+					{Capstone Project}
+					{Automatic program optimization for modern many-core systems}{}
+					{}
+					{During this capstone project we investigated different strategies of autotuning for certain parameters in the \Lift code generation. For this purpose we integrated the Auto Tuning Framework, based on Opentuner into the \Lift code generation. We achived the generation of programs with equal performance compared to the original code generation, while drastically reducing the required time.}
+	
+    \cventry{2017}
+                    {Apple WWDC 2017 Scholarship App}
+					{A dynamic trailer for WWDC 2017}{}
+					{}
+                    {For this application I developed a Swift playground featuring animations of                        many small 2D persons, which together form different shapes. They are spawned at random locations offscreen and walk into their final position in the shape. 
+                    I showcased creative usage of Apple frameworks such as Core Image, AVAudioEngine, SpriteKit and CoreMotion to successfully convince the Apple reviewers.}
+
+    \cventry{2016}
+					{Bachelor Thesis}
+					{Legal Music Supply of Sport Courses using an iOS App}{}
+					{}
+					{During this thesis I investigated different methods for legally supplying university sports courses with music. I realized this in form of an application for iOS devices, which integrates with the digital university infrastructure. This project is in use at the University of Münster.}
+								 
+	\cventry{2015}
+					{GPS Alert}
+					{iOS app written in Swift}{}
+					{}
+					{An easy way for commuters to avoid oversleeping their stop. A location based alarm clock for iOS devices, which also supports the Apple Watch.}
+					
+
+	\cventry{2013}
+					{iSeatplan}
+					{iOS app written in Objective-C}{}
+					{}
+					{Supports the teacher with a simple seating plan during class. Contributions or disruptions can be
+noted easily during the lesson. At the end of the term detailed statistics provide a fair base for determining oral
+grades.}
+					
+
+%----------------------------------------------------------------------------------
+%            teaching
+%----------------------------------------------------------------------------------
+\section{Teaching}
+
+	\cvitem{Winter 2018}{Teaching assistant for the course: \textit{Operating systems}}
+	\cvitem{Summer 2018}{Teaching assistant for the course: \textit{Databases}}
+	\cvitem{Winter 2017}{Teaching assistant for the course: \textit{Operating systems}}
+	\cvitem{Summer 2017}{Teaching assistant for the course: \textit{Databases}}
+	\cvitem{Winter 2016}{Teaching assistant for the course: \textit{Software engineering}}
+	\cvitem{Summer 2016}{Teaching assistant for the course: \textit{Databases}}
+	\cvitem{since 2015}{Tutoring school students of all levels in groups of 3-6 in Maths, Physics, Computer Science}
+
+
+
+
+
+%----------------------------------------------------------------------------------
+%            technical skills
+%----------------------------------------------------------------------------------
+\section{Technical Skills}
+	\cventry{Programming Languages}
+					{Swift, Objective-C, Scala, C/C++, Java}{}{}{}
+					{Experiences:
+					 Developing GPS Alert for iOS (Swift), 
+					 WWDC Student Scholarship Winner 2017 (Swift), 
+					 Developing iSeatplan for iOS (Objective-C), 
+					 Capstone Project: Automatic program optimization for modern many-core systems (Scala), 
+					 Student assistant for the course: Operating systems (C/C++)
+					}
+                    
+
+	\cventry{Parallel Programming}
+					{OpenCL, OpenMP, MPI}{}{}{}
+					{Experiences:
+					 Student Project: Automatic program optimization for modern many-core systems (OpenCL),
+					 2018 PRACE Course (OpenMP, MPI)
+					}
+
+%    \cventry{Relevant Lectures}
+                    %{Westfälische Wilhelms-Universität Münster}{}{}{}{Parallel Systems, Distributed Systems, Multi-Core and GPU: Parallel Programming, Compiler Construction, Resource-efficient Algorithms, Computer Networks}%{}{}{}
+	  %  %			{}
+
+
+    
+%----------------------------------------------------------------------------------
+%            personial interests
+%----------------------------------------------------------------------------------
+%\section{Personal Interests}
+%
+%	\cvitem{}{Glider Pilot}
+
+
+
+
+\end{document}
