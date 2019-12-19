@@ -13,7 +13,7 @@ build:
 #	bibtex $(TARGET).aux
 #	pdflatex $(PDFTEXOPTS) $(TARGET).tex
 #	pdflatex $(PDFTEXOPTS) $(TARGET).tex
-
+	cp $(TARGET).pdf ../$(TARGET).pdf
 de:
 	pdflatex $(TARGET)_de.tex
 
