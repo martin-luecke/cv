@@ -10,9 +10,9 @@ build:
 
 	pdflatex $(TARGET).tex
 #	latexmk $(PDFTEXOPTS) $(TARGET).tex
-#	bibtex $(TARGET).aux
-#	pdflatex $(PDFTEXOPTS) $(TARGET).tex
-#	pdflatex $(PDFTEXOPTS) $(TARGET).tex
+	biber $(TARGET)
+	pdflatex $(PDFTEXOPTS) $(TARGET).tex
+	pdflatex $(PDFTEXOPTS) $(TARGET).tex
 	cp $(TARGET).pdf ../$(TARGET).pdf
 de:
 	pdflatex $(TARGET)_de.tex
